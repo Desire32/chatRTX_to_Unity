@@ -1,14 +1,37 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 using System.Text;
+using System;
 
 public class ChatConnect : MonoBehaviour
 {
-    IEnumerator Start()
+    public UserInput inputfield;
+
+    void Start()
     {
-        string url = "http://127.0.0.1:5000/send_message"; 
-        string messageJson = "{\"message\": \"Hello, World!\"}"; 
+        if (inputfield == null)
+        {
+            Debug.LogError("Inputfield is not assigned.");
+        }
+    }
+
+    public void SendMessageToServer()
+    {
+        if (inputfield != null && !string.IsNullOrEmpty(inputfield.userInput))
+        {
+            StartCoroutine(SendMessageCoroutine(inputfield.userInput));
+        }
+        else
+        {
+            Debug.LogError("No message to send or inputfield is null.");
+        }
+    }
+
+    IEnumerator SendMessageCoroutine(string message)
+    {
+        string url = "http://127.0.0.1:5000/send_message";
+        string messageJson = $"{{\"message\": \"{message}\"}}";
         UnityWebRequest request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(messageJson);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -24,6 +47,7 @@ public class ChatConnect : MonoBehaviour
         else
         {
             Debug.Log("Response: " + request.downloadHandler.text);
+            inputfield.ClearInputField();
         }
     }
 }

@@ -1,24 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonInput : MonoBehaviour
 {
-    private Button button;
-    private UserInput inputField;
+    public Button button;
+    public UserInput inputField;
 
     void Start()
     {
         button = GetComponent<Button>();
 
+        // Ensure inputField is properly assigned
         inputField = FindObjectOfType<UserInput>();
+
+        if (inputField == null)
+        {
+            Debug.LogError("UserInput component not found.");
+        }
 
         button.onClick.AddListener(OnButtonClick);
     }
 
     void OnButtonClick()
     {
-        inputField.OnSubmit();
+        if (inputField != null)
+        {
+            inputField.OnSubmit();
+        }
+        else
+        {
+            Debug.LogError("UserInput component is null in OnButtonClick.");
+        }
     }
 }
