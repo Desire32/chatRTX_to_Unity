@@ -2,17 +2,29 @@
 using UnityEngine.Networking;
 using System.Collections;
 using System.Text;
+using TMPro;
 using System;
+
+[Serializable]
+public class BotResponse
+{
+    public string response;
+}
 
 public class ChatConnect : MonoBehaviour
 {
     public UserInput inputfield;
+    public TextMeshProUGUI botResponseText;
 
     void Start()
     {
         if (inputfield == null)
         {
-            Debug.LogError("Inputfield is not assigned.");
+            inputfield = FindObjectOfType<UserInput>();
+            if (inputfield == null)
+            {
+                Debug.LogError("UserInput component not found.");
+            }
         }
     }
 
@@ -47,6 +59,16 @@ public class ChatConnect : MonoBehaviour
         else
         {
             Debug.Log("Response: " + request.downloadHandler.text);
+            string responseJson = request.downloadHandler.text;
+            BotResponse response = JsonUtility.FromJson<BotResponse>(responseJson);
+            if (botResponseText != null)
+            {
+                botResponseText.text = response.response;
+            }
+            else
+            {
+                Debug.LogError("BotResponseText is not assigned.");
+            }
             inputfield.ClearInputField();
         }
     }

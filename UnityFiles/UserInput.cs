@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class UserInput : MonoBehaviour
@@ -7,7 +6,7 @@ public class UserInput : MonoBehaviour
     public TMP_InputField inputField;
     public TextMeshProUGUI responseText;
     public string userInput = "";
-    public ChatConnect chatConnect; // Reference to the ChatConnect script
+    public ChatConnect chatConnect;
 
     void Start()
     {

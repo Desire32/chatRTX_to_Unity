@@ -9,8 +9,6 @@ public class ButtonInput : MonoBehaviour
     void Start()
     {
         button = GetComponent<Button>();
-
-        // Ensure inputField is properly assigned
         inputField = FindObjectOfType<UserInput>();
 
         if (inputField == null)
