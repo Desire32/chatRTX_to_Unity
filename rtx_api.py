@@ -85,12 +85,7 @@ def send_message(message):
     chatdata = [[[message, None]], None]
     join_queue(session_hash, fn_index, port, chatdata)
     response = listen_for_updates(session_hash, port)
-    save_chat_data(response)
     return response
-
-def save_chat_data(chat_data, file_path="chat_history.txt"):
-    with open(file_path, 'a', encoding='utf-8') as file:
-        file.write(chat_data + '\n')
 
 @app.route('/send_message', methods=['POST'])
 def handle_send_message():
