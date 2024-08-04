@@ -4,7 +4,7 @@ using TMPro;
 public class UserInput : MonoBehaviour
 {
     public TMP_InputField inputField;
-    public TextMeshProUGUI responseText;
+
     public string userInput = "";
     public ChatConnect chatConnect;
 
