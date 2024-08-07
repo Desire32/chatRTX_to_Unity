@@ -38,7 +38,7 @@ public class UserInput : MonoBehaviour
 
         if (chatConnect != null)
         {
-            chatConnect.SendMessageToServer();
+            chatConnect.SendMessageToServer(userInput);
         }
         else
         {
